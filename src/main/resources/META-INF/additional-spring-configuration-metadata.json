@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "scheduler.cron",
+      "type": "java.lang.String",
+      "description": "Cron expression for the scheduler. Default in every midnight."
+    }
+  ]
+}
