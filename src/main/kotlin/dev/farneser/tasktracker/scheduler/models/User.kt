@@ -20,7 +20,7 @@ class User {
     var id: Long = 0
 
     @Column(name = "email", nullable = false, unique = true)
-    var email: String? = null
+    var email: String = ""
 
     @Column(name = "is_subscribed", nullable = false)
     var isSubscribed: Boolean? = null

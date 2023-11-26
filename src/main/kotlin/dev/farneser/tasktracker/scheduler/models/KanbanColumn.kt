@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "columns")
 class KanbanColumn {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
