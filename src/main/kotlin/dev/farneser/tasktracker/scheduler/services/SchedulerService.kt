@@ -31,7 +31,7 @@ class SchedulerService(
 
         for (user in users) {
 
-            log.debug("User: {}", user)
+            log.info("Getting statistic for user: ${user.email} started at ${System.currentTimeMillis()}")
 
             val statistic = StatisticDto(user.email)
 
@@ -53,9 +53,9 @@ class SchedulerService(
 
             messageService.sendScheduledMessage(Gson().toJson(statistic))
 
-            log.debug("User {} notified successfully with statistic: {}", user.email, statistic)
+            log.info("User {} notified successfully with statistic: {}", user.email, statistic)
         }
 
-        log.info("Scheduled task finished at ${System.currentTimeMillis()}")
+        log.info("Scheduled task finished at ${System.currentTimeMillis()} users notified: ${users.size}")
     }
 }
