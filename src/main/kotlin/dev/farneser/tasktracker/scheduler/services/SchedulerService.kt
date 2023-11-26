@@ -1,10 +1,9 @@
 package dev.farneser.tasktracker.scheduler.services
 
+import com.google.gson.Gson
 import dev.farneser.tasktracker.scheduler.dto.ColumnDto
 import dev.farneser.tasktracker.scheduler.dto.StatisticDto
 import dev.farneser.tasktracker.scheduler.services.messages.MessageService
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.scheduling.annotation.EnableScheduling
@@ -52,7 +51,7 @@ class SchedulerService(
 
             log.debug("Archived tasks: $archivedTasks")
 
-            messageService.sendScheduledMessage(Json.encodeToString(statistic))
+            messageService.sendScheduledMessage(Gson().toJson(statistic))
 
             log.debug("User {} notified successfully with statistic: {}", user.email, statistic)
         }
