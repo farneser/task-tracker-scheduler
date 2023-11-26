@@ -23,5 +23,5 @@ class User {
     var email: String? = null
 
     @Column(name = "is_subscribed", nullable = false)
-    var isSubscribed: Boolean = false
+    var isSubscribed: Boolean? = null
 }

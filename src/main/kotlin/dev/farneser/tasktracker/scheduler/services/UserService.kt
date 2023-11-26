@@ -8,6 +8,6 @@ import org.springframework.stereotype.Service
 @Service
 class UserService(private val userRepository: UserRepository) {
     fun getUnsubscribedUsers(): List<User> {
-        return userRepository.findAll(Sort.by(Sort.Direction.ASC, "isSubscribed"))
+        return userRepository.findAll(Sort.by(Sort.Direction.ASC, "isSubscribed")).filter { it.isSubscribed != null }
     }
 }
