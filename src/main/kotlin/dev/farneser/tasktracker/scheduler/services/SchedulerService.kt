@@ -27,7 +27,7 @@ class SchedulerService(
 
         log.info("Scheduled task started at ${System.currentTimeMillis()}")
 
-        val users = userService.getUnsubscribedUsers()
+        val users = userService.getSubscribedUsers()
 
         for (user in users) {
 

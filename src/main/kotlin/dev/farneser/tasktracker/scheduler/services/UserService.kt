@@ -13,9 +13,10 @@ class UserService(private val userRepository: UserRepository) {
         val log: Logger = LoggerFactory.getLogger(UserService::class.java)
     }
 
-    fun getUnsubscribedUsers(): List<User> {
+    fun getSubscribedUsers(): List<User> {
         log.debug("Getting unsubscribed users started at ${System.currentTimeMillis()}")
 
-        return userRepository.findAll(Sort.by(Sort.Direction.ASC, "isSubscribed")).filter { it.isSubscribed != null }
+        return userRepository.findAll(Sort.by(Sort.Direction.ASC, "isSubscribed"))
+            .filter { it.isSubscribed != null && it.isSubscribed == true }
     }
 }
