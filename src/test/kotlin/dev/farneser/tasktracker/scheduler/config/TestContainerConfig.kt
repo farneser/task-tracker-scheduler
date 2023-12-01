@@ -1,4 +1,4 @@
-package dev.farneser.tasktracker.scheduler.config;
+package dev.farneser.tasktracker.scheduler.config
 
 import com.github.dockerjava.api.model.ExposedPort
 import com.github.dockerjava.api.model.HostConfig
@@ -31,14 +31,14 @@ class TestContainerConfig {
                     )
                 }
 
-        pgContainer.start();
+        pgContainer.start()
 
         val dataSource = DriverManagerDataSource()
 
         dataSource.setDriverClassName("org.postgresql.Driver")
-        dataSource.url = pgContainer.getJdbcUrl()
-        dataSource.username = pgContainer.getUsername()
-        dataSource.password = pgContainer.getPassword()
+        dataSource.url = pgContainer.jdbcUrl
+        dataSource.username = pgContainer.username
+        dataSource.password = pgContainer.password
 
         return dataSource
     }
