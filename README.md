@@ -25,14 +25,45 @@ Make sure you have the following installed:
 To build the service, run the following commands:
 
 ```bash
-git clone https://github.com/farneser/task-tracker-scheduler
-cd task-tracker-scheduler
 ./mvnw clean package
 ```
 
 ## Running the Service
 
+To run the service, run the following commands:
+
+```bash
+./mvnw spring-boot:run
+```
+
+## Running the Service with Docker
+
 Use this service in stack with the other [Task Tracker microservices](https://github.com/farneser/task-tracker)
+
+## Running the Service with Docker Compose
+
+Get more on stack usage in the [Task Tracker](https://github.com/farneser/task-tracker) repository
+
+```yml
+version: "3"
+
+services:
+  scheduler:
+    image: farneser/task-tracker-scheduler:latest
+    container_name: scheduler-container
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: task-tracker
+      POSTGRES_USERNAME: postgres
+      POSTGRES_PASSWORD: postgres
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USERNAME: rabbitmq
+      RABBITMQ_PASSWORD: rabbitmq
+      SCHEDULER_CRON: "0 0 0 * * *" # every day at midnight
+      LOG_LEVEL: INFO
+```
 
 ## Docker
 
@@ -40,16 +71,28 @@ Service images are available on [Docker Hub](https://hub.docker.com/r/farneser/t
 
 ## Environment Variables
 
-| Variable Name     | Default value | Description                                     |
-|-------------------|---------------|-------------------------------------------------|
-| POSTGRES_HOST     | localhost     | PostgreSQL database host                        |
-| POSTGRES_PORT     | 5432          | PostgreSQL database port                        |
-| POSTGRES_DB       | task-tracker  | PostgreSQL database name                        |
-| POSTGRES_USERNAME | postgres      | PostgreSQL database username                    |
-| POSTGRES_PASSWORD | postgres      | PostgreSQL database password                    |
-| RABBITMQ_HOST     | localhost     | RabbitMQ host                                   |
-| RABBITMQ_PORT     | 5672          | RabbitMQ port                                   |
-| RABBITMQ_USERNAME | rabbitmq      | RabbitMQ username                               |
-| RABBITMQ_PASSWORD | rabbitmq      | RabbitMQ password                               |
-| SCHEDULER_CRON    | 0 0 0 * * *   | Scheduler cron expression (default at midnight) |
-| LOG_LEVEL         | INFO          | Spring application logging level                |
+### Application
+
+| Parameter      | Default value | Description                                     |
+|----------------|---------------|-------------------------------------------------|
+| SCHEDULER_CRON | 0 0 0 * * *   | Scheduler cron expression (default at midnight) |
+| LOG_LEVEL      | INFO          | Spring application logging level                |
+
+### Postgres
+
+| Parameter         | Default value  | Description                                    |
+|-------------------|----------------|------------------------------------------------|
+| POSTGRES_HOST     | `localhost`    | PostgreSQL database server IP address          |
+| POSTGRES_PORT     | `5432`         | PostgreSQL database server port                |
+| POSTGRES_DB       | `task-tracker` | PostgreSQL database name                       |
+| POSTGRES_USERNAME | `postgres`     | Username for connecting to PostgreSQL database |
+| POSTGRES_PASSWORD | `postgres`     | Password for connecting to PostgreSQL database |
+
+### RabbitMQ
+
+| Parameter         | Default value | Description                         |
+|-------------------|---------------|-------------------------------------|
+| RABBITMQ_HOST     | `localhost`   | RabbitMQ server host                |
+| RABBITMQ_PORT     | `5672`        | RabbitMQ server port                |
+| RABBITMQ_USERNAME | `rabbitmq`    | Username for connecting to RabbitMQ |
+| RABBITMQ_PASSWORD | `rabbitmq`    | Password for connecting to RabbitMQ |
