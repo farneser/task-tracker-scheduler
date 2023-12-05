@@ -17,6 +17,6 @@ class UserService(private val userRepository: UserRepository) {
         log.debug("Getting unsubscribed users started at ${System.currentTimeMillis()}")
 
         return userRepository.findAll(Sort.by(Sort.Direction.ASC, "isSubscribed"))
-            .filter { it.isSubscribed != null && it.isSubscribed == true }
+            .filter { it.isSubscribed != null && it.isSubscribed == true && it.isEnabled != null && it.isEnabled == true }
     }
 }

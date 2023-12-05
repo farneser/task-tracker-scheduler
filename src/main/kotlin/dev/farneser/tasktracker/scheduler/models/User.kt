@@ -24,4 +24,7 @@ class User {
 
     @Column(name = "is_subscribed", nullable = false)
     var isSubscribed: Boolean? = null
+
+    @Column(name = "is_enabled", nullable = false)
+    var isEnabled: Boolean? = null
 }
