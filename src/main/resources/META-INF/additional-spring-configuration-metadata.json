@@ -4,6 +4,16 @@
       "name": "scheduler.cron",
       "type": "java.lang.String",
       "description": "Cron expression for the scheduler. Default in every midnight."
+    },
+    {
+      "name": "scheduler.archivedColumnEnabled",
+      "type": "java.lang.String",
+      "description": "Enable or disable the archived column. Default is false."
+    },
+    {
+      "name": "scheduler.timezone",
+      "type": "java.lang.String",
+      "description": "Timezone for the scheduler. Default is Europe/Minsk."
     }
   ]
 }
