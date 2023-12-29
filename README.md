@@ -1,5 +1,8 @@
 # Task Tracker Scheduler Service
 
+[![Maven build](https://github.com/farneser/task-tracker-scheduler/actions/workflows/maven.yml/badge.svg)](https://github.com/farneser/task-tracker-scheduler/actions/workflows/maven.yml)
+[![Docker Image Build](https://github.com/farneser/task-tracker-scheduler/actions/workflows/docker.yml/badge.svg)](https://github.com/farneser/task-tracker-scheduler/actions/workflows/docker.yml)
+
 The Task Tracker Scheduler Service is a microservice designed to handle scheduled tasks, leveraging Spring Boot with
 Kotlin, JPA for data persistence, and RabbitMQ for efficient message queuing. This service focuses on collecting
 statistics related to tasks and sending them to RabbitMQ for further processing.
