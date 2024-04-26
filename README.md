@@ -81,7 +81,7 @@ Service images are available on [Docker Hub](https://hub.docker.com/r/farneser/t
 | SCHEDULER_CRON                    | `0 0 0 * * *`   | Scheduler cron expression (default at midnight) |
 | SCHEDULER_LOG_LEVEL               | `INFO`          | Spring application logging level                |
 | SCHEDULER_TIMEZONE                | `Europe/Minsk ` | Scheduler timezone                              |
-| SCHEDULER_ARCHIVED_COLUMN_ENABLED | `false`         | Scheduler statistics archived column enabled    |
+| SCHEDULER_ARCHIVED_STATUS_ENABLED | `false`         | Scheduler statistics archived status enabled    |
 
 ### Postgres
 

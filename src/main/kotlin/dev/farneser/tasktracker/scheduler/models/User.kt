@@ -27,4 +27,7 @@ class User {
 
     @Column(name = "is_enabled", nullable = false)
     var isEnabled: Boolean? = null
+
+    @Column(name = "is_locked", nullable = false)
+    var isLocked: Boolean? = null
 }
