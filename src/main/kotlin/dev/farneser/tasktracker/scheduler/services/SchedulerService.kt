@@ -70,9 +70,10 @@ class SchedulerService(
                 statistics.projects.add(projectDto)
             }
 
-            messageService.sendScheduledMessage(Gson().toJson(statistics))
-
-            log.info("User {} notified successfully with statistic: {}", user.email, statistics)
+            if (statistics.projects.size != 0) {
+                messageService.sendScheduledMessage(Gson().toJson(statistics))
+                log.info("User {} notified successfully with statistic: {}", user.email, statistics)
+            }
         }
 
         log.info("Scheduled task finished at ${System.currentTimeMillis()} users notified: ${users.size}")
