@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
 
-interface ProjectRepository : JpaRepository<ProjectRepository, Long> {
+interface ProjectRepository : JpaRepository<Project, Long> {
     @Query(
         value = """
             SELECT projects.id, projects.project_name

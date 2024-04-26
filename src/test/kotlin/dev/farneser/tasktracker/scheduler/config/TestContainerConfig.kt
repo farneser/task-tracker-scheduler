@@ -1,9 +1,5 @@
 package dev.farneser.tasktracker.scheduler.config
 
-import com.github.dockerjava.api.model.ExposedPort
-import com.github.dockerjava.api.model.HostConfig
-import com.github.dockerjava.api.model.PortBinding
-import com.github.dockerjava.api.model.Ports
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.jdbc.datasource.DriverManagerDataSource
@@ -19,17 +15,6 @@ class TestContainerConfig {
                 .withDatabaseName("task-tracker")
                 .withUsername("postgres")
                 .withPassword("postgres")
-                .withExposedPorts(5432)
-                .withCreateContainerCmdModifier { cmd ->
-                    cmd.withHostConfig(
-                        HostConfig().withPortBindings(
-                            PortBinding(
-                                Ports.Binding.bindPort(15432),
-                                ExposedPort(5432)
-                            )
-                        )
-                    )
-                }
 
         pgContainer.start()
 
