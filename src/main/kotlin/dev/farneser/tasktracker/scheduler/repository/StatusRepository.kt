@@ -22,5 +22,5 @@ interface StatusRepository : JpaRepository<Status, Long> {
         value = "SELECT COUNT(*) FROM tasks where project_id = :project_id AND status_id < 1 OR status_id == null ",
         nativeQuery = true
     )
-    fun getArchivedTasksCountByProjectId(@Param("project_id") projectId: Long)
+    fun getArchivedTasksCountByProjectId(@Param("project_id") projectId: Long): Long
 }

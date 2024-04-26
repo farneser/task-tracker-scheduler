@@ -17,7 +17,7 @@ class TaskService(private val taskRepository: StatusRepository) {
         return taskRepository.getTasksCountByProjectIdAndStatusId(projectId, statusId)
     }
 
-    fun getArchived(projectId: Long) {
+    fun getArchived(projectId: Long): Long {
         log.debug("Getting archived tasks by project id $projectId at ${System.currentTimeMillis()}")
 
         return taskRepository.getArchivedTasksCountByProjectId(projectId)

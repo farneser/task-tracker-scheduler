@@ -1,8 +1,9 @@
 package dev.farneser.tasktracker.scheduler.services
 
 import com.google.gson.Gson
-import dev.farneser.tasktracker.scheduler.dto.ColumnDto
-import dev.farneser.tasktracker.scheduler.dto.StatisticDto
+import dev.farneser.tasktracker.scheduler.dto.ProjectDto
+import dev.farneser.tasktracker.scheduler.dto.StatisticsDto
+import dev.farneser.tasktracker.scheduler.dto.StatusDto
 import dev.farneser.tasktracker.scheduler.services.messages.MessageService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -16,15 +17,16 @@ import org.springframework.stereotype.Component
 class SchedulerService(
     private val messageService: MessageService,
     private val userService: UserService,
-    private val columnService: ColumnService,
-    private val taskService: TaskService
+    private val statusService: StatusService,
+    private val taskService: TaskService,
+    private val projectService: ProjectService
 ) {
     companion object {
         val log: Logger = LoggerFactory.getLogger(SchedulerService::class.java)
     }
 
-    @Value("\${scheduler.archivedColumnEnabled:false}")
-    val archivedColumnEnabled: Boolean = false
+    @Value("\${scheduler.archivedStatusEnabled:false}")
+    val archivedStatusEnabled: Boolean = false
 
     @Scheduled(cron = "\${scheduler.cron:0 0 0 * * *}", zone = "\${scheduler.timezone:Europe/Minsk}")
     fun scheduledNotifier() {
@@ -37,26 +39,35 @@ class SchedulerService(
 
             log.info("Getting statistics for user: ${user.email} started at ${System.currentTimeMillis()}")
 
-            val statistics = StatisticDto(user.email)
+            val statistics = StatisticsDto(user.email)
 
-            val columns = columnService.getByUserId(user.id)
+            val projects = projectService.getByUserId(user.id)
 
-            for (column in columns) {
-                val tasks = taskService.getByColumnId(column.id, user.id)
+            for (project in projects) {
 
-                statistics.columns.add(ColumnDto(column, tasks))
+                val projectDto = ProjectDto(project.projectName ?: "Project name", ArrayList())
 
-                log.debug("Tasks in column ${column.columnName}: $tasks")
-            }
+                val statuses = statusService.getByUserId(user.id)
 
-            if (archivedColumnEnabled) {
-                log.debug("Archived column enabled")
+                for (status in statuses.filter { it.isCompleted == false }) {
+                    val tasks = taskService.getByProjectId(status.id, user.id)
 
-                val archivedTasks = taskService.getByColumnId(-1, user.id)
+                    projectDto.statuses.add(StatusDto(status, tasks))
 
-                statistics.columns.add(ColumnDto("Archived", -1, archivedTasks))
+                    log.debug("Tasks in status ${status.statusName}: $tasks")
+                }
 
-                log.debug("Archived tasks: $archivedTasks")
+                if (archivedStatusEnabled) {
+                    log.debug("Archived status enabled")
+
+                    val archivedTasks = taskService.getArchived(project.id)
+
+                    projectDto.statuses.add(StatusDto("Archived", -1, archivedTasks))
+
+                    log.debug("Archived tasks: $archivedTasks")
+                }
+
+                statistics.projects.add(projectDto)
             }
 
             messageService.sendScheduledMessage(Gson().toJson(statistics))
