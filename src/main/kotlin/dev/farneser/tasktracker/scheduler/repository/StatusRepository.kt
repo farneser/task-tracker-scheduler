@@ -6,8 +6,12 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
 
 interface StatusRepository : JpaRepository<Status, Long> {
-    fun findByProjectIdOrderByOrderNumber(projectId: Long): List<Status>
 
+    @Query(
+        value = "SELECT * FROM statuses where project_id = :project_id ORDER BY order_number",
+        nativeQuery = true
+    )
+    fun findByProjectIdOrderByOrderNumber(@Param("project_id") projectId: Long): List<Status>
 
     @Query(
         value = "SELECT COUNT(*) FROM tasks where project_id = :project_id AND status_id = :status_id",

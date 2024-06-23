@@ -12,9 +12,9 @@ class StatusService(private val statusRepository: StatusRepository) {
         val log: Logger = LoggerFactory.getLogger(StatusService::class.java)
     }
 
-    fun getByUserId(userId: Long): List<Status> {
-        log.debug("Getting statuses by user id: $userId started at ${System.currentTimeMillis()}")
+    fun getByProjectId(projectId: Long): List<Status> {
+        log.debug("Getting statuses by project id: $projectId started at ${System.currentTimeMillis()}")
 
-        return statusRepository.findByProjectIdOrderByOrderNumber(userId)
+        return statusRepository.findByProjectIdOrderByOrderNumber(projectId)
     }
 }

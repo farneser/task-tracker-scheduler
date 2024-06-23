@@ -43,14 +43,18 @@ class SchedulerService(
 
             val projects = projectService.getByUserId(user.id)
 
+            log.info("Projects for user ${user.email}: $projects")
+
             for (project in projects) {
 
                 val projectDto = ProjectDto(project.projectName ?: "Project name", ArrayList())
 
-                val statuses = statusService.getByUserId(user.id)
+                val statuses = statusService.getByProjectId(project.id)
+
+                log.info("Statuses in project ${project.projectName}: $statuses")
 
                 for (status in statuses.filter { it.isCompleted == false }) {
-                    val tasks = taskService.getByProjectId(status.id, user.id)
+                    val tasks = taskService.getByProjectId(project.id, status.id)
 
                     projectDto.statuses.add(StatusDto(status, tasks))
 

@@ -8,11 +8,11 @@ import org.springframework.data.repository.query.Param
 interface ProjectRepository : JpaRepository<Project, Long> {
     @Query(
         value = """
-            SELECT projects.id, projects.project_name
-            FROM projects
-            JOIN project_members ON projects.id = project_members.project_id
-            WHERE project_members.member_id = :user_id;
+            SELECT p.*
+            FROM projects p
+            JOIN project_members pm ON p.id = pm.project_id
+            WHERE pm.member_id = :userId
         """, nativeQuery = true
     )
-    fun findByUserId(@Param("user_id") userId: Long): List<Project>
+    fun findByUserId(@Param("userId") userId: Long): List<Project>
 }
