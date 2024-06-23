@@ -25,4 +25,10 @@ class UserService(private val userRepository: UserRepository) {
                         && it.isLocked == false
             }
     }
+
+    fun getUser(id: Long): User? {
+        log.debug("Getting user by id $id")
+
+        return userRepository.findById(id).get()
+    }
 }
