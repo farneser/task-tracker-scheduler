@@ -21,11 +21,11 @@ class MessageListener(
 
     @RabbitListener(queues = [QueueType.GET_STATISTICS])
     fun receiveMessageFromRegisterQueue(message: String) {
-        log.info("Received message from register queue at ${System.currentTimeMillis()} : $message")
+        log.info("Received message from get statistics queue at ${System.currentTimeMillis()} : $message")
 
         val id = Gson().fromJson(message, Long::class.java)
 
-        val user = userService.getUser(id);
+        val user = userService.getUser(id)
 
         if (user != null) {
             schedulerService.notifyUser(user)
